@@ -2,122 +2,212 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Helper</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
-    <script src="/jquery.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("#new-goal").click(function () {
-                $("#goal-input").toggle();
-                $("#goal-body").toggle();
-                $("#add-goal").toggle();
-                $("#new-goal").toggle();
-            });
-            $("#add-goal").click(function () {
-
-                $("#goal-input").toggle()
-                const dateControl = document.querySelector('input[type="date"]');
-                localStorage.setItem("goal", dateControl.value);
-                $("#goal-body").toggle();
-                $("#add-goal").toggle();
-                $("#new-goal").toggle();
-
-            });
-        });
-    </script>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Study Helper</title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+   <link href="style.css" rel="stylesheet">
+   <script src="/jquery.js"></script>
+   <script>
+      $(document).ready(function () {
+         $(".timer-alert").click(function () {
+            $(".hidden").html('');
+            $(".timer-alert").toggle();
+         });
+         $("#start").attr("value", new Date().getFullYear() + "-" +
+            (new Date().getMonth() + 1) + "-" + (new Date().getDate() + 1));
+         $("#new-goal").click(function () {
+            $("#goal-input").show(1000);
+            $("#goal-body").hide(1000);
+            $("#add-goal").toggle();
+            $("#cancel-new").toggle();
+            $("#new-goal").toggle();
+         });
+         $("#add-goal").click(function () {
+            const dateControl = document.querySelector('input[type="date"]');
+            localStorage.setItem("goal", dateControl.value);
+            $("#goal-input").toggle(1000);
+            $("#goal-body").toggle(1000);
+            $("#cancel-new").toggle();
+            $("#add-goal").toggle();
+            $("#new-goal").toggle();
+         });
+         $("#cancel-new").click(function () {
+            const dateControl = document.querySelector('input[type="date"]');
+            localStorage.setItem("goal", dateControl.value);
+            $("#goal-input").hide(1000);
+            $("#goal-body").show(1000);
+            $("#cancel-new").toggle();
+            $("#add-goal").toggle();
+            $("#new-goal").toggle();
+         });
+         $("#reset-timer").click(function () {
+            $("#timer-input").toggle(1000);
+            $("#timer-body").toggle(1000);
+            $("#cancel-timer").toggle();
+            $("#reset-timer").toggle();
+         });
+         $("#start-timer").click(function () {
+            $("#timer-input").hide(1000);
+            $("#timer-body").show(1000);
+            $("#timer-hours").text($("#timer-hour").val());
+            $("#timer-minutes").text($("#timer-minute").val());
+            $("#timer-seconds").text($("#timer-second").val());
+            var timer = setInterval(function () {
+               if ($("#timer-minutes").text() == 0 & $("#timer-hours").text() == 0 & $("#timer-seconds").text() == 0) {
+                  clearInterval(timer);
+                  $(".hidden").html('<audio autoplay><source src="alarm.mp3" type="audio/mpeg"></audio>');
+                  $(".timer-alert").toggle();
+               }
+               else{
+               $("#timer-seconds").text($("#timer-seconds").text() - 1);
+               if ($("#timer-seconds").text() == -1) {
+                  $("#timer-seconds").text(59);
+                  $("#timer-minutes").text($("#timer-minutes").text() - 1);
+               }}
+               if ($("#timer-minutes").text() == -1) {
+                  $("#timer-hours").text($("#timer-hours").text() - 1);
+                  $("#timer-minutes").text(59);
+               }
+            }, 0);
+         });
+         $("#cancel-timer").click(function () {
+            $("#timer-input").toggle(1000);
+            $("#timer-body").toggle(1000);
+            $("#cancel-timer").toggle();
+            $("#reset-timer").toggle();
+         });
+      });
+   </script>
 </head>
 
 <body>
-    <div class="navbar container-fluid bg-info">
-        <div class="header navbar-brand">Study Helper</div>
+   <div class="navbar container-fluid bg-info">
+      <div class="header navbar-brand">Study</br> Helper</div>
 
-        <div class="nav-item">
-            <a href="#goal">
-                <button class="btn btn-outline-success">GOAL</button>
-            </a>
-        </div>
-        <div class="nav-item">
-            <a href="#timer">
-                <button class="btn btn-outline-success">TIMER</button>
-            </a>
-        </div>
-        <div class="nav-item">
-            <a href="#clock&break">
-                <button class="btn btn-outline-success">CLOCK & BREAK</button>
-            </a>
-        </div>
-    </div>
+      <div class="nav-item">
+         <a href="#goal">
+            <button class="btn btn-outline-success">GOAL</button>
+         </a>
+      </div>
+      <div class="nav-item">
+         <a href="#timer">
+            <button class="btn btn-outline-success">TIMER</button>
+         </a>
+      </div>
+      <div class="nav-item">
+         <a href="#clock&break">
+            <button class="btn btn-outline-success">CLOCK & BREAK</button>
+         </a>
+      </div>
+   </div>
 
-    <div class="body p-5">
-
-        <div class="row border border-success">
-            <div class="col" id="goal">
-                <div class="container row" id="goal-body">
-                    <h1 id="headline">Goal</h1>
-                    <div id="Goal">
-                        <ul type="none">
-                            <li><span id="days"></span>days</li>
-                            <li><span id="hours"></span>Hours</li>
-                            <li><span id="minutes"></span>Minutes</li>
-                            <li><span id="seconds"></span>Seconds</li>
-                        </ul>
-                    </div>
-                </div>
-                <div id="goal-input">
-
-                    <div class="container row" id="goal-body">
-                        <h1 for="start"> Goal date</h1>
-                        <label for="start">Start date:</label>
-
-                        <input type="date" id="start" name="trip-start" value="2022-12-29" >
-                    </div>
-                </div>
-                <div class="row" class="emoji">
-                    <button class="btn btn-outline-secondary " id="new-goal">Reset</button>
-                    <button class="btn btn-outline-secondary" id="add-goal">START</button>
-                </div>
+   <div class="body p-5">
+      <div class="alert timer-alert alert-warning alert-dismissible" role="alert">
+         <div class="hidden d-none"></div> <strong>Times Up!</strong> Click this
+         alert to stop alert.
+      </div>
+      <div class="row  ">
+         <div class="col-sm rounded-5 border border-success m-2" id="goal">
+            <div class="container row" id="goal-body">
+               <h1 id="headline">Goal</h1>
+               <div id="Goal">
+                  <ul class="d-flex justify-content-between" type="none">
+                     <li><span id="days"></span><br>days</li>
+                     <li><span id="hours"></span><br>Hours</li>
+                     <li><span id="minutes"></span><br>Minutes</li>
+                     <li><span id="seconds"></span><br>Seconds</li>
+                  </ul>
+               </div>
             </div>
-        </div>
-    </div>
-    <script>
-        y = setInterval(function () {
-            const second = 1000,
-                minute = second * 60,
-                hour = minute * 60,
-                day = hour * 24;
+            <div id="goal-input">
 
-            let today = new Date(),
-                dd = String(today.getDate()).padStart(2, "0"),
-                mm = String(today.getMonth() + 1).padStart(2, "0"),
-                yyyy = today.getFullYear(),
-                nextYear = yyyy + 1,
-                target = localStorage.getItem("goal");
-            today = mm + "/" + dd + "/" + yyyy;
+               <div class="container row" id="goal-body">
+                  <h1 for="start"> Goal date</h1>
+                  <label for="start">Start date:</label>
 
-            const Goal = new Date(target).getTime();
-                    const now = new Date().getTime(),
-                        distance = Goal - now;
-                    document.getElementById("days").innerText = Math.floor(distance / (day)),
-                    document.getElementById("hours").innerText = Math.floor((distance % (day)) / (hour)),
-                    document.getElementById("minutes").innerText = Math.floor((distance % (hour)) / (minute)),
-                    document.getElementById("seconds").innerText = Math.floor((distance % (minute)) / second);
-                    //do something later when date is reached
+                  <input type="date" id="start" name="goal-start">
+               </div>
+            </div>
+            <div class="row">
+               <button class="btn btn-outline-secondary " id="new-goal">RESET</button>
+               <div class="btn-group" role="group" aria-label="Basic example">
+                  <button class="btn btn-outline-secondary" id="cancel-new">CANCEL</button>
+                  <button class="btn btn-outline-secondary" id="add-goal">START</button>
+               </div>
+            </div>
+         </div>
+         <div class="col-sm rounded-5 border border-success m-2" id="timer">
+            <div class="container row" id="timer-body">
+               <h1 id="timer-headline">Running Timer</h1>
+               <div id="Timer">
+                  <ul class="d-flex justify-content-between" type="none">
+                     <li><span id="timer-hours">0</span><br>Hours</li>
+                     <li><span id="timer-minutes">10</span><br>Minutes</li>
+                     <li><span id="timer-seconds">30</span><br>Seconds</li>
+                  </ul>
+               </div>
+            </div>
+            <div class="" id="timer-input">
+               <h1 id="headline">Set Timer</h1>
+               <div class="btn-group" role="group" aria-label="Basic example">
+                  <input class="form-control bg-transparent" type="number" max="99" id="timer-hour" value="0">
+                  <input class="form-control bg-transparent" type="number" max="60" id="timer-minute" value="10">
+                  <input class="form-control bg-transparent" type="number" max="60" id="timer-second" value="30">
+               </div>
+            </div>
+            <div class="row">
+               <div class="btn-group" role="group" aria-label="Basic example">
+                  <button class="btn btn-outline-secondary" id="reset-timer">RESET</button>
+                  <button class="btn btn-outline-secondary" id="cancel-timer">CANCEL</button>
+                  <button class="btn btn-outline-secondary" id="start-timer">START</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      </section>
+   </div>
+   </div>
+   </div>
+   <script>
+      x = setInterval(function () {
+         const second = 1000,
+            minute = second * 60,
+            hour = minute * 60,
+            day = hour * 24;
+         let today = new Date();
+         let dd = String(today.getDate()).padStart(2, "0"),
+            mm = String(today.getMonth() + 1).padStart(2, "0"),
+            yyyy = today.getFullYear(),
+            nextYear = yyyy + 1,
+            target = localStorage.getItem("goal");
+         today = mm + "/" + dd + "/" + yyyy;
 
-        }, 0);
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
-        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
-        crossorigin="anonymous"></script>
+         const Goal = new Date(target).getTime();
+         const now = new Date().getTime(),
+            distance = Goal - now - (19800000);
+         document.getElementById("days").innerText = Math.floor(distance / (day)),
+            document.getElementById("hours").innerText = Math.floor((distance % (day)) / (hour)),
+            document.getElementById("minutes").innerText = Math.floor((distance % (hour)) / (minute)),
+            document.getElementById("seconds").innerText = Math.floor((distance % (minute)) / second);
+         if ($("#days").text() == 0 & $("#hours").text() == 0 & $("#minutes").text() == 0 & $("#seconds").text() == 0) {
+            clearInterval(x);
+            $(".hidden").html('<audio autoplay><source src="alarm.mp3" type="audio/mpeg"></audio>');
+            $(".timer-alert").toggle();
+         }
+
+      }, 0);
+   </script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+      integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+      crossorigin="anonymous"></script>
 </body>
 
 </html>

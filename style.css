@@ -1,16 +1,36 @@
 #add-goal,
-#goal-input {
+#goal-input, #cancel-new,#timer-input, .timer-alert, #cancel-timer {
     display: none;
 }
 
-#add-goal {
-    float: right;
+#goal,#timer{
+    background: rgb(82, 207, 109);
+    min-height: 100px;
 }
-
-#goal-body {
-    min-height: 150px;
+.col-sm:hover {
+    scale: 1.01;
+    box-shadow:3px 3px gray;
 }
-
-.input-group-append {
-    cursor: pointer;
+.col-sm{
+    min-width: max-content;
+    min-height: none;
 }
+.col-sm *{
+    margin:2px;
+    padding: 2px;
+}
+#goal ul li span,#timer ul li span{
+    font-size: xxx-large;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0;
+}
+@media only screen and (max-width: 450px) {
+    body {
+      background-color: rgba(0, 191, 255, 0.279);
+    }
+    .nav-item a button{
+        padding: 0;
+        margin: 0;
+    }
+  }
