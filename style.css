@@ -1,0 +1,16 @@
+#add-goal,
+#goal-input {
+    display: none;
+}
+
+#add-goal {
+    float: right;
+}
+
+#goal-body {
+    min-height: 150px;
+}
+
+.input-group-append {
+    cursor: pointer;
+}
