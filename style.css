@@ -25,6 +25,25 @@
     justify-content: space-between;
     padding-bottom: 0;
 }
+
+.dark{
+    color: #000;
+    justify-content: right;
+    align-items: right;
+    background:#fff ;
+}
+
+.dark-mode {
+    background-color:black;
+    color: white;
+}
+.btn-bw{
+    color: #000;
+    justify-content: right;
+    align-items: right;
+    background:#fff ;
+}
+
 @media only screen and (max-width: 450px) {
     body {
       background-color: rgba(0, 191, 255, 0.279);
