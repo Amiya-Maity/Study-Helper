@@ -11,16 +11,6 @@
    <link rel="manifest" href="manifest.JSON" crossorigin="use-credentials">
 
 
-
-
-
-
-
-
-
-
-
-
    <head>
       <script data-original-src="/s/player/72d3c60a/player_ias.vflset/en_GB/miniplayer.js"
          nonce="B_EMPmLQ9Qf2V1Sds4WK2g" src="/s/player/72d3c60a/player_ias.vflset/en_GB/miniplayer.js"></script>
@@ -84149,12 +84139,28 @@
          });
       });
    </script>
+   <script>
+        function toggleMode() {
+            var element = document.body;
+            var btn = document.getElementById("dark");
+            element.classList.toggle("dark-mode");
+            btn.classList.toggle("btn-bw");
+            if(btn.innerHTML == "Dark"){
+                btn.innerHTML ="Light "
+            }else{
+                btn.innerHTML ="Dark"
+            } 
+        }
+    </script>
 </head>
 
 <body>
    <div class="navbar container-fluid bg-info">
       <div class="header navbar-brand">Study</br> Helper</div>
 
+      <div class="nav-item">
+            <button class="btn btn-outline-dark dark" id="dark" onclick="toggleMode()" >Dark</button>
+      </div>
       <div class="nav-item">
          <a href="#goal">
             <button class="btn btn-outline-success">GOAL</button>
