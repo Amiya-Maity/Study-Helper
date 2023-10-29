@@ -84043,6 +84043,39 @@
             margin: -5px -10px -9px 0
          }
       </style>
+
+
+      <!-- Contributed by Aasish Kumar Sahoo -->
+      <style>
+         body {
+             font-family: Arial, sans-serif;
+             text-align: center;
+             background-color: #f0f0f0;
+         }
+ 
+         h1 {
+             color: #333;
+         }
+ 
+         #timerMessage {
+             font-size: 20px;
+             color: #333;
+         }
+ 
+         #startTimer, #stopTimer {
+             background-color: #3498db;
+             color: #fff;
+             padding: 10px 20px;
+             border: none;
+             margin: 10px;
+             cursor: pointer;
+         }
+ 
+         #startTimer:hover, #stopTimer:hover {
+             background-color: #2980b9;
+         }
+ 
+     </style>
    </head>
 
 
@@ -84295,6 +84328,62 @@
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
       integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
       crossorigin="anonymous"></script>
+
+      <!-- Added a timer which can also run in background and display notification when needed. -->
+      <h1>Background Timer</h1>
+      <p id="timerMessage">Timer is not running.</p>
+      <button id="startTimer">Start Timer</button>
+      <button id="stopTimer">Stop Timer</button>
+  
+      <script>
+          let timer;
+          let remainingTime = 0;
+  
+          function displayMessage(message) {
+              document.getElementById("timerMessage").textContent = message;
+          }
+  
+          // Request permission for notifications
+          if ("Notification" in window) {
+              Notification.requestPermission().then(function (permission) {
+                  if (permission !== "granted") {
+                      alert("Notifications are blocked. Please enable notifications for this page.");
+                  }
+              });
+          }
+  
+          function showNotification() {
+              if (Notification.permission === "granted") {
+                  const notification = new Notification("Timer is done!", {
+                      body: "Your timer has finished.",
+                  });
+              }
+          }
+  
+          document.getElementById("startTimer").addEventListener("click", function () {
+              const duration = prompt("Enter the timer duration (in seconds):");
+              if (duration) {
+                  remainingTime = parseInt(duration);
+                  displayMessage(`Timer is running for ${remainingTime} seconds.`);
+                  timer = setInterval(function () {
+                      remainingTime--;
+                      displayMessage(`Timer is running for ${remainingTime} seconds.`);
+                      if (remainingTime <= 0) {
+                          clearInterval(timer);
+                          displayMessage("Timer is done!");
+                          showNotification();
+                      }
+                  }, 1000);
+              }
+          });
+  
+          document.getElementById("stopTimer").addEventListener("click", function () {
+              clearInterval(timer);
+              displayMessage("Timer is stopped.");
+          });
+      </script>
+
+
 </body>
 
 </html>
